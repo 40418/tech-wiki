@@ -1,11 +1,28 @@
-import react, { reactCompilerPreset } from '@vitejs/plugin-react'
-import babel from '@rolldown/plugin-babel'
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vite';
+import path from 'path';
+// plugins
+import react, { reactCompilerPreset } from '@vitejs/plugin-react';
+import babel from '@rolldown/plugin-babel';
+import tailwindCss from "@tailwindcss/vite";
+import sassDts from "vite-plugin-sass-dts";
+import svgr from "vite-plugin-svgr";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    babel({ presets: [reactCompilerPreset()] })
-  ],
-})
+    plugins: [
+        react(),
+        babel({ presets: [reactCompilerPreset()] }),
+        tailwindCss(),
+        sassDts(),
+        svgr()
+    ],
+    css: {
+        preprocessorOptions: {
+            scss: {
+                loadPaths: [
+                    path.resolve(import.meta.dirname, "./src/styles")
+                ]
+            }
+        }
+    }
+});
